@@ -1,0 +1,19 @@
+# PlatformIO
+firmware/.pio/
+firmware/.vscode/
+
+# MATLAB / Simulink
+*.asv
+*.autosave
+slprj/
+*.slxc
+*.mexw64
+codegen/
+
+# Flutter
+app/build/
+app/.dart_tool/
+
+# Python
+__pycache__/
+*.pyc

@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" width="1400" height="1000" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #f7f8fa; stroke: #4a5160; stroke-width: 1.5; }
+    .lv { fill: #eef5ff; stroke: #1f5fa8; stroke-width: 1.5; }
+    .ts { fill: #fff3ea; stroke: #c0392b; stroke-width: 1.5; }
+    .uno { fill: #1f5fa8; stroke: #123c6c; stroke-width: 2; }
+    .title { font-size: 22px; font-weight: 700; fill: #1b1f27; }
+    .sub { font-size: 13px; fill: #5a6270; }
+    .mtitle { font-size: 15px; font-weight: 700; fill: #1b1f27; }
+    .row { font-size: 12.5px; fill: #1b1f27; }
+    .pin { font-size: 12.5px; fill: #ffffff; font-weight: 600; }
+    .note { font-size: 12px; fill: #3a404c; }
+    .stub { stroke: #4a5160; stroke-width: 1.5; }
+    .pwr { fill: #c0392b; font-weight: 600; }
+    .lvc { fill: #1f5fa8; font-weight: 600; }
+    .gnd { fill: #222222; font-weight: 600; }
+    .pwm { fill: #7d3cb5; font-weight: 600; }
+    .uart { fill: #1e8449; font-weight: 600; }
+    .sig { fill: #1f5fa8; font-weight: 600; }
+    .nc { fill: #9aa1ad; }
+  </style>
+  <rect class="bg" width="1400" height="1000"/>
+
+  <text x="40" y="34" class="title">MBD_Embedded_Rover — collegamenti (rover telecomandato)</text>
+  <text x="40" y="54" class="sub">Schema a etichette di rete: i pin con lo stesso nome sono collegati tra loro. Nessuna saldatura.</text>
+
+  <!-- ===================== ARDUINO UNO ===================== -->
+  <rect class="uno" x="570" y="90" width="210" height="700" rx="10"/>
+  <text x="675" y="120" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">Arduino Uno R3</text>
+  <text x="675" y="138" text-anchor="middle" font-size="12" fill="#cfe0f5">ATmega328P · 16 MHz</text>
+
+  <!-- left pins -->
+  <g>
+    <line class="stub" x1="540" y1="190" x2="570" y2="190"/><text x="580" y="194" class="pin">VIN</text><text x="534" y="194" text-anchor="end" class="row lvc">LV_9V</text>
+    <line class="stub" x1="540" y1="235" x2="570" y2="235"/><text x="580" y="239" class="pin">GND</text><text x="534" y="239" text-anchor="end" class="row gnd">GND</text>
+    <line class="stub" x1="540" y1="280" x2="570" y2="280"/><text x="580" y="284" class="pin">5V</text><text x="534" y="284" text-anchor="end" class="row lvc">+5V</text>
+    <line class="stub" x1="540" y1="325" x2="570" y2="325"/><text x="580" y="329" class="pin">USB</text><text x="534" y="329" text-anchor="end" class="row nc">solo upload/debug</text>
+    <line class="stub" x1="540" y1="420" x2="570" y2="420"/><text x="580" y="424" class="pin">A0</text><text x="534" y="424" text-anchor="end" class="row nc">n.c.</text>
+    <line class="stub" x1="540" y1="465" x2="570" y2="465"/><text x="580" y="469" class="pin">A1</text><text x="534" y="469" text-anchor="end" class="row nc">n.c.</text>
+    <line class="stub" x1="540" y1="510" x2="570" y2="510"/><text x="580" y="514" class="pin">A2</text><text x="534" y="514" text-anchor="end" class="row sig">VBAT_SENSE</text>
+    <line class="stub" x1="540" y1="555" x2="570" y2="555"/><text x="580" y="559" class="pin">A3</text><text x="534" y="559" text-anchor="end" class="row nc">n.c.</text>
+    <line class="stub" x1="540" y1="600" x2="570" y2="600"/><text x="580" y="604" class="pin">A4</text><text x="534" y="604" text-anchor="end" class="row nc">riserv. IMU SDA</text>
+    <line class="stub" x1="540" y1="645" x2="570" y2="645"/><text x="580" y="649" class="pin">A5</text><text x="534" y="649" text-anchor="end" class="row nc">riserv. IMU SCL</text>
+  </g>
+
+  <!-- right pins -->
+  <g>
+    <line class="stub" x1="780" y1="170" x2="810" y2="170"/><text x="770" y="174" text-anchor="end" class="pin">D0 RX</text><text x="816" y="174" class="row uart">HC05_TXD</text>
+    <line class="stub" x1="780" y1="214" x2="810" y2="214"/><text x="770" y="218" text-anchor="end" class="pin">D1 TX</text><text x="816" y="218" class="row uart">UART_TX</text>
+    <line class="stub" x1="780" y1="258" x2="810" y2="258"/><text x="770" y="262" text-anchor="end" class="pin">D2</text><text x="816" y="262" class="row nc">riserv. encoder sx</text>
+    <line class="stub" x1="780" y1="302" x2="810" y2="302"/><text x="770" y="306" text-anchor="end" class="pin">D3</text><text x="816" y="306" class="row nc">riserv. encoder dx</text>
+    <line class="stub" x1="780" y1="346" x2="810" y2="346"/><text x="770" y="350" text-anchor="end" class="pin">D4</text><text x="816" y="350" class="row sig">M_L_IN2</text>
+    <line class="stub" x1="780" y1="390" x2="810" y2="390"/><text x="770" y="394" text-anchor="end" class="pin">D5 OC0B</text><text x="816" y="394" class="row pwm">M_R_EN (PWM)</text>
+    <line class="stub" x1="780" y1="434" x2="810" y2="434"/><text x="770" y="438" text-anchor="end" class="pin">D6 OC0A</text><text x="816" y="438" class="row pwm">M_L_EN (PWM)</text>
+    <line class="stub" x1="780" y1="478" x2="810" y2="478"/><text x="770" y="482" text-anchor="end" class="pin">D7</text><text x="816" y="482" class="row sig">M_L_IN1</text>
+    <line class="stub" x1="780" y1="522" x2="810" y2="522"/><text x="770" y="526" text-anchor="end" class="pin">D8 ICP1</text><text x="816" y="526" class="row sig">US_ECHO</text>
+    <line class="stub" x1="780" y1="566" x2="810" y2="566"/><text x="770" y="570" text-anchor="end" class="pin">D9 OC1A</text><text x="816" y="570" class="row pwm">SERVO</text>
+    <line class="stub" x1="780" y1="610" x2="810" y2="610"/><text x="770" y="614" text-anchor="end" class="pin">D10</text><text x="816" y="614" class="row sig">M_R_IN3</text>
+    <line class="stub" x1="780" y1="654" x2="810" y2="654"/><text x="770" y="658" text-anchor="end" class="pin">D11</text><text x="816" y="658" class="row sig">M_R_IN4</text>
+    <line class="stub" x1="780" y1="698" x2="810" y2="698"/><text x="770" y="702" text-anchor="end" class="pin">D12</text><text x="816" y="702" class="row sig">US_TRIG</text>
+    <line class="stub" x1="780" y1="742" x2="810" y2="742"/><text x="770" y="746" text-anchor="end" class="pin">D13</text><text x="816" y="746" class="row sig">LED di stato (on-board)</text>
+  </g>
+
+  <!-- ===================== LEFT COLUMN ===================== -->
+  <!-- LV -->
+  <rect class="lv" x="40" y="80" width="400" height="120" rx="6"/>
+  <text x="54" y="102" class="mtitle">Dominio LV — logica (pila 9 V)</text>
+  <text x="54" y="126" class="row">9 V (+) → <tspan class="lvc">LV_9V</tspan> (Vin)  ·  9 V (−) → <tspan class="gnd">GND</tspan></text>
+  <text x="54" y="148" class="row">Arduino 5V → <tspan class="lvc">+5V</tspan> (linea + di sopra)</text>
+  <text x="54" y="170" class="row"><tspan class="lvc">+5V</tspan> —100 nF— <tspan class="gnd">GND</tspan>, vicino al pin 16 del L293D</text>
+  <text x="54" y="190" class="row nc">Alimenta: ATmega, L293D logica, HC-SR04, HC-05</text>
+
+  <!-- TS -->
+  <rect class="ts" x="40" y="220" width="400" height="186" rx="6"/>
+  <text x="54" y="242" class="mtitle">Dominio TS — trazione (4× AA, 6 V)</text>
+  <text x="54" y="266" class="row">AA (+) → <tspan class="pwr">+6V</tspan> (linea + di sotto)  ·  AA (−) → <tspan class="gnd">GND</tspan></text>
+  <text x="54" y="288" class="row"><tspan class="pwr">+6V</tspan> —100 µF (gamba + al +)— <tspan class="gnd">GND</tspan></text>
+  <text x="54" y="310" class="row"><tspan class="pwr">+6V</tspan> —1N4007 (striscia verso il servo)— <tspan class="pwr">SERVO_V</tspan></text>
+  <text x="54" y="332" class="row"><tspan class="pwr">+6V</tspan> —10 kΩ— <tspan class="sig">VBAT_SENSE</tspan> —10 kΩ— <tspan class="gnd">GND</tspan></text>
+  <text x="54" y="354" class="row">100 nF sui morsetti di ciascun motore</text>
+  <text x="54" y="376" class="row nc">Alimenta: motori (L293D pin 8), servo</text>
+  <text x="54" y="396" class="row nc">GND dei due domini collegati: massa comune</text>
+
+  <!-- HC-05 -->
+  <rect class="box" x="40" y="426" width="400" height="184" rx="6"/>
+  <text x="54" y="448" class="mtitle">HC-05 Bluetooth (logica 3,3 V)</text>
+  <text x="54" y="472" class="row">VCC → <tspan class="lvc">+5V</tspan>  ·  GND → <tspan class="gnd">GND</tspan></text>
+  <text x="54" y="494" class="row">TXD → <tspan class="uart">HC05_TXD</tspan> (D0) — staccare durante l'upload</text>
+  <text x="54" y="516" class="row">RXD ← nodo del partitore:</text>
+  <text x="70" y="538" class="row"><tspan class="uart">UART_TX</tspan> —1 kΩ— nodo —2 kΩ— <tspan class="gnd">GND</tspan></text>
+  <text x="70" y="558" class="row nc">5 V · 2/3 = 3,33 V</text>
+  <text x="54" y="580" class="row nc">STATE, EN → n.c.</text>
+  <text x="54" y="600" class="row nc">Default 9600 baud</text>
+
+  <!-- Procedure -->
+  <rect class="box" x="40" y="630" width="400" height="160" rx="6"/>
+  <text x="54" y="652" class="mtitle">Accensione / spegnimento</text>
+  <text x="54" y="676" class="row">ON:  1. AA scollegate  2. 9 V (LV)  3. handshake app</text>
+  <text x="54" y="696" class="row">       4. AA (TS)  5. STOP + R2D</text>
+  <text x="54" y="720" class="row">OFF: 1. Spegni dall'app  2. togli una pila AA (TS)</text>
+  <text x="54" y="740" class="row">       3. scollega la 9 V (LV)  4. salva mappa</text>
+  <text x="54" y="766" class="row nc">Scollegare sempre lato batteria (clip o pila),</text>
+  <text x="54" y="782" class="row nc">mai un jumper sotto tensione dalla breadboard</text>
+
+  <!-- ===================== RIGHT COLUMN ===================== -->
+  <!-- L293D -->
+  <rect class="box" x="1000" y="80" width="360" height="396" rx="6"/>
+  <text x="1014" y="102" class="mtitle">L293DNE — doppio ponte H</text>
+  <g class="row">
+    <text x="1014" y="126">1  Enable 1,2</text><text x="1140" y="126" class="pwm">M_L_EN</text>
+    <text x="1014" y="148">2  Input 1</text><text x="1140" y="148" class="sig">M_L_IN1</text>
+    <text x="1014" y="170">3  Output 1</text><text x="1140" y="170">Motore sx</text>
+    <text x="1014" y="192">4,5  GND</text><text x="1140" y="192" class="gnd">GND</text>
+    <text x="1014" y="214">6  Output 2</text><text x="1140" y="214">Motore sx</text>
+    <text x="1014" y="236">7  Input 2</text><text x="1140" y="236" class="sig">M_L_IN2</text>
+    <text x="1014" y="258">8  Vcc2 motori</text><text x="1140" y="258" class="pwr">+6V (TS)</text>
+    <text x="1014" y="280">9  Enable 3,4</text><text x="1140" y="280" class="pwm">M_R_EN</text>
+    <text x="1014" y="302">10 Input 3</text><text x="1140" y="302" class="sig">M_R_IN3</text>
+    <text x="1014" y="324">11 Output 3</text><text x="1140" y="324">Motore dx</text>
+    <text x="1014" y="346">12,13 GND</text><text x="1140" y="346" class="gnd">GND</text>
+    <text x="1014" y="368">14 Output 4</text><text x="1140" y="368">Motore dx</text>
+    <text x="1014" y="390">15 Input 4</text><text x="1140" y="390" class="sig">M_R_IN4</text>
+    <text x="1014" y="412">16 Vcc1 logica</text><text x="1140" y="412" class="lvc">+5V (LV)</text>
+  </g>
+  <text x="1014" y="438" class="note">Chip a cavallo della scanalatura, tacca a sinistra.</text>
+  <text x="1014" y="456" class="note">Mai scambiare i pin 8 e 16.</text>
+
+  <!-- HC-SR04 -->
+  <rect class="box" x="1000" y="496" width="360" height="96" rx="6"/>
+  <text x="1014" y="518" class="mtitle">HC-SR04 (montato sul servo)</text>
+  <text x="1014" y="542" class="row">VCC → <tspan class="lvc">+5V</tspan>  ·  GND → <tspan class="gnd">GND</tspan></text>
+  <text x="1014" y="564" class="row">TRIG → <tspan class="sig">US_TRIG</tspan>  ·  ECHO → <tspan class="sig">US_ECHO</tspan></text>
+  <text x="1014" y="584" class="row nc">Almeno 60 ms tra due misure</text>
+
+  <!-- Servo -->
+  <rect class="box" x="1000" y="612" width="360" height="96" rx="6"/>
+  <text x="1014" y="634" class="mtitle">Servo</text>
+  <text x="1014" y="658" class="row">GND → <tspan class="gnd">GND</tspan>  ·  + → <tspan class="pwr">SERVO_V</tspan> (dopo il diodo)</text>
+  <text x="1014" y="680" class="row">Segnale → <tspan class="pwm">SERVO</tspan></text>
+  <text x="1014" y="700" class="row nc">Mai dal 5V dell'Arduino</text>
+
+  <!-- ===================== NOTES / LEGEND ===================== -->
+  <rect class="box" x="40" y="810" width="1320" height="170" rx="6"/>
+  <text x="54" y="832" class="mtitle">Note</text>
+  <text x="54" y="856" class="note">1. Massa comune: GND della 9 V, delle AA, dell'Arduino, del L293D e di tutti i moduli uniti. Le linee +5V e +6V non si toccano mai.</text>
+  <text x="54" y="876" class="note">2. Il partitore su A2 permette al rover di sapere se il TS è collegato (≈ 3 V) o scollegato (0 V) e di compensare la velocità con la carica delle pile.</text>
+  <text x="54" y="896" class="note">3. D0/D1 sono condivisi con il convertitore USB: per caricare il firmware staccare il filo su D0. In Tinkercad l'HC-05 è sostituito dal monitor seriale.</text>
+  <text x="54" y="916" class="note">4. Elettrolitico: gamba + (lato senza striscia) sulla linea +6V. Diodo: striscia (catodo) verso il servo.</text>
+  <text x="54" y="936" class="note">5. Sensore IR e altri moduli del kit non usati in questa versione. D2/D3 riservati agli encoder, A4/A5 a un'IMU (estensioni).</text>
+
+  <g font-size="12">
+    <text x="54" y="964" class="mtitle">Legenda:</text>
+    <text x="140" y="964" class="lvc">■ dominio LV (5 V / 9 V)</text>
+    <text x="320" y="964" class="pwr">■ dominio TS (6 V)</text>
+    <text x="470" y="964" class="gnd">■ massa</text>
+    <text x="550" y="964" class="uart">■ UART</text>
+    <text x="630" y="964" class="pwm">■ PWM / timer</text>
+    <text x="750" y="964" class="sig">■ segnale</text>
+    <text x="840" y="964" class="nc">■ non collegato / riservato</text>
+  </g>
+</svg>
