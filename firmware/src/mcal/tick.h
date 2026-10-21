@@ -22,4 +22,11 @@ void Tick_Init(void);
  */
 uint32_t Tick_GetMs(void);
 
+/*
+ * Microsecondi trascorsi da Tick_Init(), risoluzione 4 µs.
+ * Serve a misurare la durata dei task. Si azzera dopo circa 71 minuti:
+ * per le differenze brevi (end - start) non è un problema.
+ */
+uint32_t Tick_GetUs(void);
+
 #endif /* TICK_H */

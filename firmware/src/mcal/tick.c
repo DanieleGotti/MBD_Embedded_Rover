@@ -29,6 +29,25 @@ uint32_t Tick_GetMs(void)
     return ms;
 }
 
+uint32_t Tick_GetUs(void)
+{
+    uint32_t ms;
+    uint8_t  cnt;
+    uint8_t  pending;
+
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        ms      = s_ms;
+        cnt     = TCNT2;                    /* 0..249, 4 µs per conteggio */
+        pending = TIFR2 & (1 << OCF2A);     /* compare avvenuto ma ISR non ancora eseguita */
+    }
+
+    /* Il timer è già ripartito da 0 ma s_ms non è stato ancora incrementato */
+    if (pending && cnt < 125) {
+        ms++;
+    }
+    return ms * 1000UL + (uint32_t)cnt * 4UL;
+}
+
 ISR(TIMER2_COMPA_vect)
 {
     s_ms++;
