@@ -14,7 +14,7 @@
 
 #define UBRR_VALUE ((F_CPU / (16UL * UART_BAUD)) - 1UL)
 
-#define TX_SIZE 64u                 /* potenza di 2 */
+#define TX_SIZE 256u                /* potenza di 2; con uint8_t al massimo 256 */
 #define RX_SIZE 32u                 /* potenza di 2 */
 #define TX_MASK (TX_SIZE - 1u)
 #define RX_MASK (RX_SIZE - 1u)

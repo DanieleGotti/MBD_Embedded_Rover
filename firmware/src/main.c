@@ -8,11 +8,12 @@
 
 #include "mcal/tick.h"
 #include "mcal/uart.h"
+#include "ecual/motor.h"
 #include "services/scheduler.h"
 
 /* Carico artificiale del task di prova, in ms: 0 = nessun carico.
  * Serve solo per vedere WCET e overrun cambiare. */
-#define LOAD_MS 15
+#define LOAD_MS 0
 
 static void PrintU32(uint32_t value)
 {
@@ -24,13 +25,79 @@ static void PrintU32(uint32_t value)
 
 /* ---------------------------------------------------------------- task */
 
+/* Velocità dei comandi da tastiera, 0 … MOTOR_MAX */
+static int16_t s_speed = 120;
+
+/* Direzione richiesta per ciascun motore: −1 indietro, 0 fermo, +1 avanti */
+static int8_t s_dir_l = 0;
+static int8_t s_dir_r = 0;
+
+/* Applica ai motori lo stato corrente (direzioni × velocità) */
+static void ApplyDrive(void)
+{
+    Motor_Set(s_dir_l * s_speed, s_dir_r * s_speed);
+}
+
+static void SetDirection(int8_t left, int8_t right)
+{
+    s_dir_l = left;
+    s_dir_r = right;
+    ApplyDrive();
+}
+
+/*
+ * Comandi da tastiera (monitor seriale):
+ *   w avanti   s indietro   a ruota a sinistra   d ruota a destra
+ *   x (o spazio) stop        + / - velocità di 20 in 20
+ */
 static void Task_Comm(void)
 {
     char c;
 
-    /* Eco: svuota tutto quello che è arrivato */
     while (Uart_GetChar(&c)) {
-        Uart_PutChar(c);
+        switch (c) {
+            case 'w':
+                SetDirection(1, 1);
+                Uart_PutString("avanti\r\n");
+                break;
+            case 'a':
+                SetDirection(-1, 1);
+                Uart_PutString("sinistra\r\n");
+                break;
+            case 's':
+                SetDirection(-1, -1);
+                Uart_PutString("indietro\r\n");
+                break;
+            case 'd':
+                SetDirection(1, -1);
+                Uart_PutString("destra\r\n");
+                break;
+            case '+':
+                s_speed += 20;
+                if (s_speed > MOTOR_MAX) {
+                    s_speed = MOTOR_MAX;
+                }
+                ApplyDrive();
+                PrintU32((uint32_t)s_speed);
+                Uart_PutString(" (+)\r\n");
+                break;
+            case '-':
+                s_speed -= 20;
+                if (s_speed < 0) {
+                    s_speed = 0;
+                }
+                ApplyDrive();
+                PrintU32((uint32_t)s_speed);
+                Uart_PutString(" (-)\r\n");
+                break;
+            case 'x':
+            case ' ':                  /* due tasti, stessa azione */
+                SetDirection(0, 0);
+                Uart_PutString("stop\r\n");
+                break;
+            default:                   /* qualunque altro tasto */
+                break;
+        }
     }
 }
 
@@ -84,6 +151,7 @@ static void Task_Status(void)
 
 int main(void)
 {
+    Motor_Init();            /* per primo: motori in stato sicuro */
     DDRB |= (1 << PB5);      /* LED di stato */
 
     Tick_Init();
