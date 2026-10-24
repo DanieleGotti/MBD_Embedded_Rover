@@ -154,7 +154,7 @@ Le masse dei due domini sono collegate: tutti i segnali hanno lo stesso riferime
 | D5 | PWM motore dx | Timer0 OC0B | L293D pin 9 (EN3,4) |
 | D6 | PWM motore sx | Timer0 OC0A | L293D pin 1 (EN1,2) |
 | D7 | Direzione motore sx | GPIO | L293D pin 2 (IN1) |
-| D8 | Echo ultrasuoni | Timer1 ICP1 | HC-SR04 ECHO |
+| D8 | Echo ultrasuoni | PCINT0 + TCNT1 | HC-SR04 ECHO |
 | D9 | Comando servo | Timer1 OC1A | Servo segnale |
 | D10 | Direzione motore dx | GPIO | L293D pin 10 (IN3) |
 | D11 | Direzione motore dx | GPIO | L293D pin 15 (IN4) |
@@ -308,7 +308,7 @@ Durata indicativa: 25 angoli × ~100 ms ≈ 2,5 s.
 | Risorsa | Configurazione | Uso |
 |---|---|---|
 | Timer0 (8 bit) | PWM phase-correct, prescaler 8 → ≈ 3,9 kHz | PWM dei motori (OC0A, OC0B) |
-| Timer1 (16 bit) | Normal mode, prescaler 8 → 0,5 µs/tick | Input capture dell'eco (ICP1), impulso servo con compare match (OC1A) |
+| Timer1 (16 bit) | Fast PWM modo 14, TOP = ICR1 = 39999, prescaler 8 → 0,5 µs/tick, periodo 20 ms | Impulso servo su OC1A; TCNT1 come base dei tempi per l'eco (letto nell'interrupt PCINT0 di D8) |
 | Timer2 (8 bit) | CTC, prescaler 64, OCR2A = 249 → 1 ms | Tick dello scheduler |
 | USART0 | 9600 baud 8N1 (default HC-05), poi 38400 configurando l'HC-05 con comandi AT | Protocollo con l'app |
 | ADC | Riferimento AVcc, prescaler 128 | Tensione pile su ADC2 |
