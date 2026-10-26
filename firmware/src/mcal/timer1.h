@@ -12,6 +12,7 @@
 #ifndef TIMER1_H
 #define TIMER1_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define TIMER1_TICKS_PER_US 2u
@@ -22,6 +23,12 @@ void Timer1_Init(void);
 
 /* Durata dell'impulso su D9, in tick da 0,5 µs (0 … TIMER1_TOP). */
 void Timer1_SetCompareA(uint16_t ticks);
+
+/*
+ * Collega (true) o scollega (false) il pin D9 dal timer.
+ * Scollegato, il pin resta fisso a 0: nessun impulso esce.
+ */
+void Timer1_SetOutputA(bool enable);
 
 /* Valore corrente del contatore (0 … TIMER1_TOP), lettura atomica. */
 uint16_t Timer1_GetCount(void);

@@ -31,6 +31,16 @@ void Timer1_SetCompareA(uint16_t ticks)
     }
 }
 
+void Timer1_SetOutputA(bool enable)
+{
+    if (enable) {
+        TCCR1A |= (1 << COM1A1);    /* D9 comandato dal timer */
+    } else {
+        TCCR1A &= ~(1 << COM1A1);   /* D9 torna un GPIO normale ... */
+        PORTB  &= ~(1 << PB1);      /* ... fisso a 0 */
+    }
+}
+
 uint16_t Timer1_GetCount(void)
 {
     uint16_t count;

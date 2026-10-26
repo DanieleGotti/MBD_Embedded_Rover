@@ -31,4 +31,10 @@ int16_t Servo_GetAngle(void);
  */
 void Servo_Release(void);
 
+/*
+ * Correzione del centro, in gradi (calibrazione CAL_SERVO_ZERO):
+ * compensa il montaggio non perfettamente dritto dell'ultrasuono.
+ */
+void Servo_SetTrim(int8_t deg);
+
 #endif /* SERVO_H */

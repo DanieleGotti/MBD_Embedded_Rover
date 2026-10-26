@@ -6,6 +6,7 @@
 #include "../mcal/timer1.h"
 
 static int16_t s_angle = 0;
+static int8_t  s_trim  = 0;   /* correzione del centro, in gradi */
 
 void Servo_Init(void)
 {
@@ -23,9 +24,10 @@ void Servo_SetAngle(int16_t deg)
         s_angle = deg;
     }
 
-    int32_t us = SERVO_CENTER_US + (int32_t)s_angle * SERVO_US_PER_DEG;
+    int32_t us = SERVO_CENTER_US + ((int32_t)s_angle + s_trim) * SERVO_US_PER_DEG;
 
     Timer1_SetCompareA((uint16_t)(us * TIMER1_TICKS_PER_US));
+    Timer1_SetOutputA(true);   /* riattiva gli impulsi se il servo era rilasciato */
 }
 
 int16_t Servo_GetAngle(void)
@@ -35,7 +37,13 @@ int16_t Servo_GetAngle(void)
 
 void Servo_Release(void)
 {
-    /* OCR1A = 0: l'uscita resta bassa per tutto il periodo (resta un
-     * impulso di 0,5 µs, troppo corto perché il servo lo consideri) */
-    Timer1_SetCompareA(0);
+    /* Nessun impulso: alcuni servo interpretano anche un impulso
+     * cortissimo come comando, quindi il pin va scollegato dal timer */
+    Timer1_SetOutputA(false);
+}
+
+void Servo_SetTrim(int8_t deg)
+{
+    s_trim = deg;
+    Servo_SetAngle(s_angle);   /* riapplica con il nuovo centro */
 }
